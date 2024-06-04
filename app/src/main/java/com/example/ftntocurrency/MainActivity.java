@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         modeTextView = findViewById(R.id.modeTextView);
         switchPlatform = findViewById(R.id.switchPlatform);
 
-
+        switchPlatform.setEnabled(false);
         switchPlatform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                     if (switchtoftn.isChecked()) {
+                        switchPlatform.setEnabled(true);
                         Toast.makeText(MainActivity.this, "Switched to FTN mode", Toast.LENGTH_SHORT).show();
                         modeTextView.setText("Enter your FTN");
                         FTN.setHint("0.123230123");
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                     } else {
+                        switchPlatform.setEnabled(false);
                         Toast.makeText(MainActivity.this, "Switched to Dollar mode", Toast.LENGTH_SHORT).show();
                         modeTextView.setText("Enter your Dollar");
                         FTN.setHint("1.002942 $");
