@@ -282,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
                 Type type = new TypeToken<List<String>>() {
                 }.getType();
                 List<String> dataList = gson.fromJson(json, type);
+                linearLayout.removeAllViews();
 
                 for (String data : dataList) {
                     View view = getLayoutInflater().inflate(R.layout.card_user, null, false);
@@ -289,7 +290,6 @@ public class MainActivity extends AppCompatActivity {
                     ImageView del_btn = (ImageView) view.findViewById(R.id.delete_btn);
                     user_income.setText(data);
                     linearLayout.addView(view);
-
                     del_btn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
