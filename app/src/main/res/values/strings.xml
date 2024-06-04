@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FTN To Currency</string>
+    <string name="enter_ftn">Enter your FTN</string>
+    <string name="enter_currency">Dollar rate in your currency</string>
+    <string name="enter_country_code">Country Code</string>
+    <string name="convert">Convert</string>
+    <string name="ftn_minus_str">Minus FTN (Optional)</string>
+</resources>
