@@ -2,13 +2,16 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primary_pink">#F924B0</color>
-    <color name="primary_blue">#1E4DF4</color>
-    <color name="input_ftn_color">#5C7E0B57</color>
+    <color name="primary_pink">#30021F</color>
+    <color name="primary_blue">#010512</color>
+    <color name="input_ftn_color">#1DFF00A1</color>
     <color name="input_currency_color">#5B122A82</color>
     <color name="input_coun_code_color">#5C07F29D</color>
     <color name="light_green">#07F29D</color>
-    <color name="convert_btn_color">#09D1DD</color>
+    <color name="convert_btn_color">#DD098F</color>
+    <color name="card_border_color">#3CDD098F</color>
     <color name="red">#ED1818</color>
     <color name="darkred">#7D0101</color>
+    <color name="hint_color">#28FFFFFF</color>
+    <color name="light_gray">#D1D1D1</color>
 </resources>

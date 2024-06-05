@@ -40,7 +40,7 @@
                         android:layout_height="106dp"
                         android:fontFamily="@font/fascinate_inline"
                         android:text="@string/app_name"
-                        android:textColor="@color/white"
+                        android:textColor="@color/convert_btn_color"
                         android:textSize="35dp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -104,7 +104,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:fontFamily="@font/poppins_semibold"
-                    android:hint="Total Amount"
+                    android:hint="0"
                     android:padding="20dp"
                     android:textAlignment="center"
                     android:textColor="@color/white"
@@ -141,6 +141,7 @@
                         android:ems="10"
                         android:hint="0.123230123"
                         android:inputType="numberDecimal"
+                        android:textColorHint="@color/hint_color"
                         android:padding="10dp" />
                 </LinearLayout>
 
@@ -168,6 +169,7 @@
                         android:ems="10"
                         android:hint="0.0101"
                         android:inputType="numberDecimal"
+                        android:textColorHint="@color/hint_color"
                         android:padding="10dp" />
                 </LinearLayout>
 
@@ -218,8 +220,10 @@
 
                         <ImageView
                             android:id="@+id/saveIcon"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/save_user_icon_shape"
+                            android:layout_margin="10dp"
                             app:srcCompat="@mipmap/mordersave_icon_foreground" />
 
                         <LinearLayout
@@ -281,6 +285,7 @@
                     android:ems="10"
                     android:hint="Alexa"
                     android:inputType="text"
+                    android:textColorHint="@color/hint_color"
                     android:padding="10dp" />
             </LinearLayout>
 
@@ -312,7 +317,7 @@
                     android:background="@drawable/convert_btn_shape"
                     android:text="Convert"
                     android:textAllCaps="false"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
