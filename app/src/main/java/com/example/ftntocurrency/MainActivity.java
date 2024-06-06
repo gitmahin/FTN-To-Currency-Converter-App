@@ -21,6 +21,19 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import android.os.Handler;
+import android.os.Looper;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MainActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     private ImageView save_user;
@@ -36,9 +49,13 @@ public class MainActivity extends AppCompatActivity {
     private Switch switchtoftn;
     private TextView modeTextView;
 
-    double ftn_to_dollar_equ;
+    private Button refreshButton;
+    private TextView showftnprice;
 
-    private Switch switchPlatform;
+    private ExecutorService executorService;
+    private Handler mainThreadHandler;
+
+    double ftn_to_dollar_equ;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -57,33 +74,24 @@ public class MainActivity extends AppCompatActivity {
         clear_btn = findViewById(R.id.clear_btn);
         userEdit = findViewById(R.id.userEdit);
         modeTextView = findViewById(R.id.modeTextView);
-        switchPlatform = findViewById(R.id.switchPlatform);
-        switchPlatform.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    if (switchPlatform.isChecked()) {
-//                    for vivaftn
-//                    When 1 VIVAFTN = 0.002611 ftn
-                        ftn_to_dollar_equ = 2.21699745;
-                        switchPlatform.setText("VIVAFTN");
-                        Toast.makeText(MainActivity.this, "Switched to VIVAFTN", Toast.LENGTH_SHORT).show();
-                    } else {
-//                    for FirstFisher
-//                    When 1 dzook = 0.002647 ftn
-                        ftn_to_dollar_equ = 2.1039999499;
-                        switchPlatform.setText("FirstFisher");
-                        Toast.makeText(MainActivity.this, "Switched to FirstFisher", Toast.LENGTH_SHORT).show();
-                    }
-            }
-        });
-
-        if(!switchPlatform.isChecked()){
-            ftn_to_dollar_equ = 2.1039999499;
-            switchPlatform.setText("FirstFisher");
-        }
-
+        refreshButton = findViewById(R.id.refreshButton);
+        showftnprice = findViewById(R.id.showftnprice);
         switchtoftn = findViewById(R.id.switchtoftn);
         switchtoftn.setChecked(false);
+
+        executorService = Executors.newSingleThreadExecutor();
+        mainThreadHandler = new Handler(Looper.getMainLooper());
+
+        showftnprice.setText("Loading...");
+        getData();
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showftnprice.setText("Refreshing...");
+                reinitializeFtnPrice();
+            }
+        });
         switchtoftn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -205,6 +213,59 @@ public class MainActivity extends AppCompatActivity {
 
         showData();
     }
+
+    public void reinitializeFtnPrice() {
+        getData();
+    }
+
+    public void getData() {
+        String url = "https://etherscan.io/token/0xaedf386b755465871ff874e3e37af5976e247064";
+
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
+                    Document document = Jsoup.connect(url).get();
+                    Elements element = document.select("#ContentPlaceHolder1_tr_valuepertoken");
+                    Elements ftnvalue = element.select("div span:nth-child(1)");
+                    String price = extractPrice(ftnvalue.text());
+
+                    mainThreadHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "FTN price: " + price + "$", Toast.LENGTH_SHORT).show();
+                            showftnprice.setText(price);
+                            Double parsePricetoDouble = Double.parseDouble(price);
+                            ftn_to_dollar_equ = parsePricetoDouble;
+                        }
+                    });
+
+                } catch (Exception e) {
+                    mainThreadHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "ERROR CONNECTION TIMEDOUT", Toast.LENGTH_SHORT).show();
+                            showftnprice.setText("Connecting...");
+                        }
+                    });
+
+                }
+            }
+        });
+
+    }
+
+    public static String extractPrice(String text) {
+        Pattern pattern = Pattern.compile("\\$([0-9]+\\.[0-9]{2})");
+        Matcher matcher = pattern.matcher(text);
+        if (matcher.find()) {
+            return matcher.group(1);
+        } else {
+            return null;
+        }
+    }
+
 
     public void dollarModeCalculation() {
         if (!switchtoftn.isChecked()) {
@@ -330,5 +391,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        executorService.shutdown();
     }
 }

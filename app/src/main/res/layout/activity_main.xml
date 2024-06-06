@@ -60,7 +60,7 @@
                         app:layout_constraintHorizontal_bias="0.996"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.333"
+                        app:layout_constraintVertical_bias="0.246"
                         app:srcCompat="@mipmap/logo_foreground" />
 
                     <Switch
@@ -76,17 +76,55 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView2"
                         app:layout_constraintVertical_bias="0.0" />
 
-                    <Switch
-                        android:id="@+id/switchPlatform"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="FirstFisher"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/refreshButton"
+                        android:layout_width="81dp"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/refreshbtnshape"
+                        android:text="Refresh"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textStyle="normal"
+                        android:textSize="12dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/switchtoftn"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:layout_constraintHorizontal_bias="0.996"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                        app:layout_constraintVertical_bias="0.416" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.988"
+                        app:layout_constraintStart_toEndOf="@+id/switchtoftn"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                        app:layout_constraintVertical_bias="1.0">
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="bold"
+                            android:textColor="@color/convert_btn_color"
+                            android:text="$"
+                            android:paddingEnd="5px"
+                            />
+
+                        <TextView
+                            android:id="@+id/showftnprice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:text="2.21" />
+                    </LinearLayout>
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
